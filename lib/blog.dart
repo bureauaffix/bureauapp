@@ -8,20 +8,80 @@ class Blog extends StatefulWidget {
 }
 
 class _BlogState extends State<Blog> {
+  final TextEditingController _textFieldController1 = TextEditingController();
+  final TextEditingController _textFieldController2 = TextEditingController();
+  final TextEditingController _textFieldController3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.black,
         title: Text('Blog',style: TextStyle(color: Colors.white),),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        icon: Icon(Icons.add,color: Colors.white,),
-        label: Text('Add',style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.black,
+      body: Center(
+        child: Text('Press the Add(+) button to add New BlogS'),
       ),
+      floatingActionButton: FloatingActionButton(backgroundColor: Colors.black,
+        onPressed: () {
+          _showTextFieldDialog(context);
+        },
+        tooltip: 'Add',
+        child: Icon(Icons.add,color: Colors.white,),
+      ),
+    );
+  }
+
+  void _showTextFieldDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('New Blog'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _textFieldController1,
+                decoration: InputDecoration(
+                  hintText: 'Title:',
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: _textFieldController2,
+                decoration: InputDecoration(
+                  hintText: 'Written By :',
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: _textFieldController3,
+                decoration: InputDecoration(
+                  hintText: 'Blog Content :',
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Handle the text field values here
+                String enteredText1 = _textFieldController1.text;
+                String enteredText2 = _textFieldController2.text;
+                print('Entered Text 1: $enteredText1');
+                print('Entered Text 2: $enteredText2');
+                Navigator.of(context).pop();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
