@@ -9,6 +9,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Login'),),);
+    return Scaffold(appBar: AppBar(backgroundColor: Colors.black,title: Text('Login',style: TextStyle(color: Colors.white),),),);
   }
 }

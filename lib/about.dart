@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
 class About extends StatefulWidget {
-  static String a='about';
+  static String a = 'about';
 
   @override
   State<About> createState() => _AboutState();
@@ -9,6 +10,13 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('About'),),);
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.black,
+        title: Text(
+          'About',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 }

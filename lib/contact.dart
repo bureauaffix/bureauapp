@@ -9,6 +9,6 @@ class Contact extends StatefulWidget {
 class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Contact'),),);
+    return Scaffold(appBar: AppBar(backgroundColor: Colors.black,title: Text('Contact',style: TextStyle(color: Colors.white),),),);
   }
 }

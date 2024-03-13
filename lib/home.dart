@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
           automaticallyImplyLeading: false,
           actions: [
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(1),
               child: Expanded(
                 child: Row(
                   children: [
@@ -61,7 +61,10 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: scrwidth*0.10,
                     ),
-                    Image.asset('images/icon.png'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset('images/icon.png'),
+                    ),
                     SizedBox(
                       width: scrwidth*0.0,
                     ),

@@ -9,6 +9,6 @@ class Registeration extends StatefulWidget {
 class _RegisterationState extends State<Registeration> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Registration'),),);
+    return Scaffold(appBar: AppBar(backgroundColor: Colors.black,title: Text('Registration',style: TextStyle(color: Colors.white),),),);
   }
 }

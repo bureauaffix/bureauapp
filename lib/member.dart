@@ -9,6 +9,6 @@ class Member extends StatefulWidget {
 class _MemberState extends State<Member> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Member'),),);
+    return Scaffold(appBar: AppBar(backgroundColor: Colors.black,title: Text('Member',style: TextStyle(color: Colors.white),),),);
   }
 }
