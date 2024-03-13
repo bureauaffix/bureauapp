@@ -47,6 +47,7 @@ class _ResearchState extends State<Research> {
             children: [
               TextField(
                 controller: _textFieldController1,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Project Name :',
                 ),
@@ -54,6 +55,7 @@ class _ResearchState extends State<Research> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController2,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Researcher Name:',
                 ),
@@ -61,6 +63,8 @@ class _ResearchState extends State<Research> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController3,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Email Id :',
                 ),
@@ -68,6 +72,7 @@ class _ResearchState extends State<Research> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController4,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Tecnology Used :',
                 ),
@@ -75,6 +80,8 @@ class _ResearchState extends State<Research> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController5,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   hintText: 'Application :',
                 ),
@@ -82,6 +89,7 @@ class _ResearchState extends State<Research> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController6,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Project Link :',
                 ),

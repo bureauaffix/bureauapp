@@ -41,6 +41,7 @@ class _BlogState extends State<Blog> {
             children: [
               TextField(
                 controller: _textFieldController1,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Title:',
                 ),
@@ -48,6 +49,7 @@ class _BlogState extends State<Blog> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController2,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Written By :',
                 ),
@@ -55,6 +57,8 @@ class _BlogState extends State<Blog> {
               SizedBox(height: 10),
               TextField(
                 controller: _textFieldController3,
+                keyboardType: TextInputType.multiline,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Blog Content :',
                 ),
