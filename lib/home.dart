@@ -1,5 +1,15 @@
+import 'package:bureauaffix/about.dart';
+import 'package:bureauaffix/login.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:bureauaffix/about.dart';
+import 'package:bureauaffix/member.dart';
+import 'package:bureauaffix/contact.dart';
+import 'package:bureauaffix/registration.dart';
+import 'package:bureauaffix/login.dart';
+import 'package:bureauaffix/research.dart';
+import 'package:bureauaffix/blog.dart';
+import 'package:bureauaffix/chat.dart';
 
 final List<String> imgList = [
   'images/video.gif',
@@ -17,6 +27,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    Size scr=MediaQuery.of(context).size;
+    double scrheight=scr.height;
+    double scrwidth=scr.width;
     return Scaffold(
         appBar: AppBar(backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
@@ -27,18 +40,18 @@ class _HomeState extends State<Home> {
                 child: Row(
                   children: [
                     PopupMenuButton(
-                      icon: Icon(Icons.more_vert),
+                      icon: Icon(Icons.more_vert,color: Colors.white,),
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           child: Text('About'),
                           value: 1,
-                          onTap: () {
+                          onTap: () {Navigator.pushNamed(context,About.a );
                           },
                         ),
                         PopupMenuItem(
                           child: Text('Contact'),
                           value: 2,
-                          onTap: () {},
+                          onTap: () {Navigator.pushNamed(context, Contact.p);},
                         ),
                       ],
                       onSelected: (value) {
@@ -46,35 +59,35 @@ class _HomeState extends State<Home> {
                       },
                     ),
                     SizedBox(
-                      width: 40,
+                      width: scrwidth*0.10,
                     ),
                     Image.asset('images/icon.png'),
                     SizedBox(
-                      width: 15,
+                      width: scrwidth*0.0,
                     ),
                     Text('Bureau Affix',
                         style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white)),
                     SizedBox(
-                      width: 25,
+                      width: scrwidth*0.10,
                     ),
-                    Icon(Icons.search),
+                    Icon(Icons.search,color: Colors.white,),
                     SizedBox(
-                      width: 15,
+                      width: scrwidth*0.0,
                     ),
                     PopupMenuButton(
-                      icon: Icon(Icons.account_circle),
+                      icon: Icon(Icons.account_circle,color: Colors.white,),
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           child: Text(' login'),
                           value: 1,
-                          onTap: () {
+                          onTap: () {Navigator.pushNamed(context, Login.l);
                           },
                         ),
                         PopupMenuItem(
                           child: Text('Registration'),
                           value: 2,
-                          onTap: () {
+                          onTap: () {Navigator.pushNamed(context, Registeration.r);
                           },
                         ),
                       ],
@@ -108,7 +121,7 @@ class _HomeState extends State<Home> {
                         .map((item) => Container(
                               child: Center(
                                   child: Image.asset(item,
-                                      fit: BoxFit.cover, width: 1000,)),
+                                      fit: BoxFit.cover, width: scrwidth*1.0,)),
                             ))
                         .toList(),
                   ),
@@ -120,7 +133,7 @@ class _HomeState extends State<Home> {
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStatePropertyAll(Size(150, 150))),
-                        onPressed: () {},
+                        onPressed: () {Navigator.pushNamed(context, Member.m);},
                         child: Image(
                           image: AssetImage('images/a.png'),
                         )),
@@ -128,7 +141,7 @@ class _HomeState extends State<Home> {
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStatePropertyAll(Size(150, 150))),
-                        onPressed: () {},
+                        onPressed: () {Navigator.pushNamed(context, Research.re);},
                         child: Image(
                           image: AssetImage('images/b.png'),
                         ))
@@ -140,7 +153,7 @@ class _HomeState extends State<Home> {
                     TextButton(style: ButtonStyle(
                         fixedSize:
                         MaterialStatePropertyAll(Size(150, 150))),
-                      onPressed: () {},
+                      onPressed: () {Navigator.pushNamed(context, Blog.b);},
                       child:Image(
                         image: AssetImage('images/c.png'),
                       )
@@ -148,7 +161,7 @@ class _HomeState extends State<Home> {
                     TextButton(style: ButtonStyle(
                         fixedSize:
                         MaterialStatePropertyAll(Size(150, 150))),
-                      onPressed: () {},
+                      onPressed: () {Navigator.pushNamed(context, Chat.c);},
                       child: Image(
                         image: AssetImage('images/d.png'),
                       )

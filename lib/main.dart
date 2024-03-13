@@ -1,4 +1,5 @@
 import 'package:bureauaffix/home.dart';
+import 'package:bureauaffix/research.dart';
 import 'package:flutter/material.dart';
 import 'package:bureauaffix/registration.dart';
 import 'package:bureauaffix/member.dart';
@@ -10,7 +11,7 @@ import 'package:bureauaffix/contact.dart';
 
 
 void main() {
-  runApp(MaterialApp(initialRoute: Home.h,routes: {
+  runApp(MaterialApp(debugShowCheckedModeBanner: false,initialRoute: Home.h,routes: {
     Home.h:(context)=>Home(),
     Registeration.r:(context)=>Registeration(),
     Member.m:(context)=>Member(),
@@ -19,6 +20,7 @@ void main() {
     Login.l:(context)=>Login(),
     About.a:(context)=>About(),
     Contact.p:(context)=>Contact(),
+    Research.re:(context)=>Research(),
 
 
   },
