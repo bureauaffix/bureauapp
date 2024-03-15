@@ -1,4 +1,5 @@
 plugins {
+    id 'com.google.gms.google-services'
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
@@ -30,6 +31,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        allprojects {
+            tasks.withType(JavaCompile) {
+                options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+            }
+        }
     }
 
     kotlinOptions {
@@ -41,6 +47,7 @@ android {
     }
 
     defaultConfig {
+        multiDexEnabled true
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.bureauaffix"
         // You can update the following values to match your application needs.
@@ -64,4 +71,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation platform('com.google.firebase:firebase-bom:32.7.4')
+}

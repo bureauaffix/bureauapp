@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Contact extends StatefulWidget {
-  static String p = 'contact';
+  static const String p = 'contact';
 
   @override
-  State<Contact> createState() => _ContactState();
+  _ContactState createState() => _ContactState();
 }
 
 class _ContactState extends State<Contact> {
   // Method to launch URLs
-  void _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  void _launchURL(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $urlString';
     }
   }
 
@@ -85,4 +84,3 @@ class _ContactState extends State<Contact> {
     );
   }
 }
-

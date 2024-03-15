@@ -63,9 +63,6 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.all(8.0),
                       child: Image.asset('images/icon.png'),
                     ),
-                    SizedBox(
-                      width: scrwidth*0.0,
-                    ),
                     Text('Bureau Affix',
                         style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white)),

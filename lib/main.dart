@@ -8,10 +8,14 @@ import 'package:bureauaffix/chat.dart';
 import 'package:bureauaffix/login.dart';
 import 'package:bureauaffix/about.dart';
 import 'package:bureauaffix/contact.dart';
+import 'front.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
-void main() {
-  runApp(MaterialApp(debugShowCheckedModeBanner: false,initialRoute: Home.h,routes: {
+Future main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialize Firebase app
+  runApp(MaterialApp(debugShowCheckedModeBanner: false,initialRoute: Front.f,routes: {
     Home.h:(context)=>Home(),
     Registeration.r:(context)=>Registeration(),
     Member.m:(context)=>Member(),
@@ -21,10 +25,9 @@ void main() {
     About.a:(context)=>About(),
     Contact.p:(context)=>Contact(),
     Research.re:(context)=>Research(),
-
+    Front.f : (context)=>Front(),
 
   },
-    home: Home(),
   ));
 }
 
