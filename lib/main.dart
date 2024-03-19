@@ -20,7 +20,7 @@ Future main()async {
     Registeration.r:(context)=>Registeration(),
     Member.m:(context)=>Member(),
     Blog.b:(context)=>Blog(),
-    Chat.c:(context)=>Chat(),
+    chat.c:(context)=>chat(),
     Login.l:(context)=>Login(),
     About.a:(context)=>About(),
     Contact.p:(context)=>Contact(),

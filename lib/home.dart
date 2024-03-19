@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
                     TextButton(style: ButtonStyle(
                         fixedSize:
                         MaterialStatePropertyAll(Size(150, 150))),
-                      onPressed: () {Navigator.pushNamed(context, Chat.c);},
+                      onPressed: () {Navigator.pushNamed(context, chat.c);},
                       child: Image(
                         image: AssetImage('images/d.png'),
                       )
