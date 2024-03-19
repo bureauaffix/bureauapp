@@ -66,9 +66,19 @@ class affix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [Text('$name'), Text('$department'), Text('$email')],
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Name: $name', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 4),
+            Text('Department: $department'),
+            SizedBox(height: 4),
+            Text('Email: $email'),
+          ],
+        ),
       ),
     );
   }
