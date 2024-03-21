@@ -61,77 +61,79 @@ class _ResearchState extends State<Research> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Add Research'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  pname = value;
-                },
-                controller: _textFieldController1,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Project Name :',
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    pname = value;
+                  },
+                  controller: _textFieldController1,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: 'Project Name :',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (value) {
-                  rname = value;
-                },
-                controller: _textFieldController2,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Researcher Name:',
+                SizedBox(height: 10),
+                TextField(
+                  onChanged: (value) {
+                    rname = value;
+                  },
+                  controller: _textFieldController2,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: 'Researcher Name:',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (value) {
-                  email = value;
-                },
-                controller: _textFieldController3,
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Email Id :',
+                SizedBox(height: 10),
+                TextField(
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  controller: _textFieldController3,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'Email Id :',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (value) {
-                  technology = value;
-                },
-                controller: _textFieldController4,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Technology Used :',
+                SizedBox(height: 10),
+                TextField(
+                  onChanged: (value) {
+                    technology = value;
+                  },
+                  controller: _textFieldController4,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: 'Technology Used :',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (value) {
-                  application = value;
-                },
-                controller: _textFieldController5,
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  hintText: 'Application :',
+                SizedBox(height: 10),
+                TextField(
+                  onChanged: (value) {
+                    application = value;
+                  },
+                  controller: _textFieldController5,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    hintText: 'Application :',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (value) {
-                  link = value;
-                },
-                controller: _textFieldController6,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Project Link :',
+                SizedBox(height: 10),
+                TextField(
+                  onChanged: (value) {
+                    link = value;
+                  },
+                  controller: _textFieldController6,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: 'Project Link :',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(

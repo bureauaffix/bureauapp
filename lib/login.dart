@@ -15,7 +15,8 @@ class _LoginState extends State<Login> {
   final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
-
+  final messagetextcontroler = TextEditingController();
+  final messagetextcontroler1 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +34,7 @@ class _LoginState extends State<Login> {
           child: Column(
             children: [
               TextField(
+                controller: messagetextcontroler,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
@@ -49,6 +51,7 @@ class _LoginState extends State<Login> {
                 height: 10,
               ),
               TextField(
+                controller: messagetextcontroler1,
                 obscureText: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -82,6 +85,8 @@ class _LoginState extends State<Login> {
                       showSpinner = false;
                     });
                   }
+                  messagetextcontroler.clear();
+                  messagetextcontroler1.clear();
                 },
                 child: Text('Login'),
               ),

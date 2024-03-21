@@ -67,25 +67,15 @@ class _HomeState extends State<Home> {
                         style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white)),
                     SizedBox(
-                      width: scrwidth*0.10,
-                    ),
-                    Icon(Icons.search,color: Colors.white,),
-                    SizedBox(
                       width: scrwidth*0.0,
                     ),
                     PopupMenuButton(
-                      icon: Icon(Icons.account_circle,color: Colors.white,),
+                      icon: Icon(Icons.logout,color: Colors.white,),
                       itemBuilder: (context) => [
                         PopupMenuItem(
-                          child: Text(' login'),
+                          child: Text(' Sign out'),
                           value: 1,
-                          onTap: () {Navigator.pushNamed(context, Login.l);
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: Text('Registration'),
-                          value: 2,
-                          onTap: () {Navigator.pushNamed(context, Registeration.r);
+                          onTap: () {Navigator.pop(context);
                           },
                         ),
                       ],

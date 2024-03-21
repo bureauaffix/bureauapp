@@ -1,132 +1,158 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
-final _firestore = FirebaseFirestore.instance;
-late User loginuser;
 
+final _firestorecloud = FirebaseFirestore.instance;
+late User loguser;
 class chat extends StatefulWidget {
-  static const String c = 'chat';
+  static String c = 'chat';
+  //const chat_screen({super.key});
 
   @override
   State<chat> createState() => _chatState();
 }
 
 class _chatState extends State<chat> {
-  late String msg;
+  final messageTextController= TextEditingController();
   final _auth = FirebaseAuth.instance;
-  final messagetextcontroller = TextEditingController();
+
+  late String mes;
+  //FirebaseUser loguser;
+
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    getuser();
+    currenuser();
   }
 
-  void getuser() async {
+  void currenuser() async {
     try {
       final user = await _auth.currentUser;
       if (user != null) {
-        loginuser = user;
+        loguser = user;
+        //print(loguser.email);
       }
     } catch (e) {
       print(e);
     }
   }
 
-  void cht() async {
-    await for (var msg in _firestore.collection('chat').snapshots()) {
-      for (var abhi in msg.docs) {
-        print(abhi.data());
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Colors.black,
+        title: Text("Chat Now",style: TextStyle(color: Colors.white),),
         actions: [
           IconButton(
-            icon: Icon(Icons.close,color: Colors.white,),
-            onPressed: () {
-              // cht();
-              _auth.signOut();
-              Navigator.pop(context);
-            },
-          )
+              onPressed: () {
+                _auth.signOut();
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.close,color: Colors.white,))
         ],
-        title: const Text('chat',style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              streammsg(),
-              Row(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            messages_stream(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 children: [
                   SizedBox(
-                    width: 250,
-                    child: TextField(
-                      controller: messagetextcontroller,
+                    width: 310,
+                    child: TextField(controller: messageTextController,
                       onChanged: (value) {
-                        msg = value;
+                        mes = value;
                       },
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
+                          filled: true,
+                          fillColor: Colors.white,
+                          disabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                            ),
+                            borderRadius: BorderRadius.circular(40),
                           ),
-                          hintText: 'type your massage here ....'),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          hintText: "Type your message here..."),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      messagetextcontroller.clear();
-                      _firestore.collection('chat').add({
-                        'text': msg,
-                        'sender': loginuser.email,
-                      });
-                    },
-                    child: const Text('Send'),
-                  ),
+                      onPressed: () {
+
+                        _firestorecloud.collection('chat').add({
+                          'text': mes,
+                          'sender': loguser.email,
+                          'time':FieldValue.serverTimestamp()
+                        });
+                        messageTextController.clear();
+
+                      },
+                      child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.black,
+                          child: Icon(
+                            Icons.send,
+                            color: Colors.white,
+                          )))
                 ],
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
   }
 }
 
-class streammsg extends StatelessWidget {
-  const streammsg({super.key});
+class messages_stream extends StatelessWidget {
+  const messages_stream({super.key});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _firestore.collection('chat').snapshots(),
+        stream: _firestorecloud.collection('chat').orderBy('time',descending: false).snapshots(),
         builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+                child: Text("data not found")/*CircularProgressIndicator(
+              backgroundColor: Colors.lightBlue,
+            )*/);
+          }
           if (snapshot.hasData) {
             final messages = snapshot.data?.docs.reversed;
-            List<bubble> mw = [];
+            List<mbubble> mw = [];
             for (var message in messages!) {
               final mt = message.data()['text'];
               final ms = message.data()['sender'];
-              final currentuser = loginuser?.email;
-              final storemessage = bubble(ms, mt, currentuser == ms);
-              mw.add(storemessage);
+              final messageTime=message.data()['time'] as Timestamp;
+              final currentUser = loguser.email;
+
+
+
+              final messagebubbler = mbubble(
+                ms: ms,
+                mt: mt,
+                time: messageTime,
+                isMe: currentUser==ms,
+              );
+              mw.add(messagebubbler);
             }
 
-            return SizedBox(
-              width: 700,
-              height: 600,
+            return Expanded(
               child: ListView(
                 reverse: true,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 children: mw,
               ),
             );
@@ -137,41 +163,43 @@ class streammsg extends StatelessWidget {
   }
 }
 
-class bubble extends StatelessWidget {
-  bubble(this.sender, this.text, this.isme);
-  late final String sender;
-  late final String text;
-  late final bool isme;
+class mbubble extends StatelessWidget {
+  mbubble({required this.ms, required this.mt, required this.isMe, required this.time});
+  final String? mt;
+  final String? ms;
+  final bool isMe;
+  final Timestamp time;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment:
-            isme ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isMe?CrossAxisAlignment.end:CrossAxisAlignment.start,
         children: [
-          Text(
-            sender,
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
           Material(
-            color: isme ? Colors.black : Colors.grey,
+            borderRadius: BorderRadius.circular(10),
             elevation: 5.0,
-            borderRadius: isme
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30))
-                : BorderRadius.only(
-                    topRight: Radius.circular(30),
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30)),
+            color: isMe?Colors.black:Colors.grey,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Text(
-                '$text',
-                style: TextStyle(
-                    fontSize: 20, color: isme ? Colors.white : Colors.black),
+              child: Column(
+                crossAxisAlignment: isMe?CrossAxisAlignment.end:CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$ms',
+                    style: isMe?TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold):TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold,),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '$mt ',
+                    style: TextStyle(fontSize: 15,color: Colors.white),
+                  ), Text('${DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(time.seconds * 1000))}', style: TextStyle(fontSize: 10,color: Colors.white),)
+                  ,
+                ],
               ),
             ),
           ),
