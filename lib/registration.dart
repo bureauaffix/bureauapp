@@ -20,6 +20,10 @@ class _RegisterationState extends State<Registeration> {
   late String department;
   late String email;
   late String password;
+  final messagetextcontroler = TextEditingController();
+  final messagetextcontroler1 = TextEditingController();
+  final messagetextcontroler2 = TextEditingController();
+  final messagetextcontroler3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +42,7 @@ class _RegisterationState extends State<Registeration> {
             child: Column(
               children: [
                 TextField(
+                  controller: messagetextcontroler,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.name,
                   onChanged: (value) {
@@ -52,6 +57,7 @@ class _RegisterationState extends State<Registeration> {
                   height: 10,
                 ),
                 TextField(
+                  controller: messagetextcontroler1,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     department = value;
@@ -65,6 +71,7 @@ class _RegisterationState extends State<Registeration> {
                   height: 10,
                 ),
                 TextField(
+                  controller: messagetextcontroler2,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (value) {
@@ -79,6 +86,7 @@ class _RegisterationState extends State<Registeration> {
                   height: 10,
                 ),
                 TextField(
+                  controller: messagetextcontroler3,
                   obscureText: true,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
@@ -112,6 +120,10 @@ class _RegisterationState extends State<Registeration> {
                     } catch (e) {
                       print(e);
                     }
+                    messagetextcontroler.clear();
+                    messagetextcontroler1.clear();
+                    messagetextcontroler2.clear();
+                    messagetextcontroler3.clear();
                   },
                   child: const Text('Register'),
                 ),

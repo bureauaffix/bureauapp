@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 
+
 final _firestorecloud = FirebaseFirestore.instance;
 late User loguser;
+
 class chat extends StatefulWidget {
   static String c = 'chat';
   //const chat_screen({super.key});
@@ -15,12 +18,11 @@ class chat extends StatefulWidget {
 }
 
 class _chatState extends State<chat> {
-  final messageTextController= TextEditingController();
+  final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
   late String mes;
   //FirebaseUser loguser;
-
 
   @override
   void initState() {
@@ -41,43 +43,100 @@ class _chatState extends State<chat> {
     }
   }
 
+  void getdatamessageusingsnapchat() async {
+    await for (var i in _firestorecloud.collection('messages').snapshots()) {
+      for (var ms in i.docs) {
+        print(ms.data());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.black,
         title: Text("Chat Now",style: TextStyle(color: Colors.white),),
+
         actions: [
           IconButton(
               onPressed: () {
+                //getdatamessageusingsnapchat();
+                //getdatamessage();
                 _auth.signOut();
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.close,color: Colors.white,))
+              icon: Icon(Icons.close))
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            messages_stream(),
+            StreamBuilder(
+                stream: _firestorecloud
+                    .collection('chat')
+                    .orderBy('time', descending: false)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: Text(
+                            "data not found") /*CircularProgressIndicator(
+              backgroundColor: Colors.lightBlue,
+            )*/
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    final messages = snapshot.data?.docs.reversed;
+                    List<mbubble> mw = [];
+                    for (var message in messages!) {
+                      final mt = message.data()['text'];
+                      final ms = message.data()['sender'];
+                      final messageTime = message.data()['time'];
+                      final currentUser = loguser.email;
+
+                      final messagebubbler = mbubble(
+                        ms: ms,
+                        mt: mt,
+                        time: messageTime,
+                        isMe: currentUser == ms,
+                      );
+                      mw.add(messagebubbler);
+                    }
+
+                    return Expanded(
+                      child: ListView(
+                        reverse: true,
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                        children: mw,
+                      ),
+                    );
+                  } else {
+                    throw Exception('failed to retrieve messages');
+                  }
+                }),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   SizedBox(
                     width: 310,
-                    child: TextField(controller: messageTextController,
+                    child: TextField(
+                      controller: messageTextController,
+                      style: TextStyle(color: Colors.white),
                       onChanged: (value) {
                         mes = value;
                       },
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Colors.black,
                           disabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.black,
+                              color: Colors.white //0x433600
                             ),
                             borderRadius: BorderRadius.circular(40),
                           ),
@@ -89,14 +148,12 @@ class _chatState extends State<chat> {
                   ),
                   TextButton(
                       onPressed: () {
-
                         _firestorecloud.collection('chat').add({
                           'text': mes,
                           'sender': loguser.email,
-                          'time':FieldValue.serverTimestamp()
+                          'time': FieldValue.serverTimestamp()
                         });
                         messageTextController.clear();
-
                       },
                       child: CircleAvatar(
                           radius: 20,
@@ -115,66 +172,23 @@ class _chatState extends State<chat> {
   }
 }
 
-class messages_stream extends StatelessWidget {
-  const messages_stream({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: _firestorecloud.collection('chat').orderBy('time',descending: false).snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-                child: Text("data not found")/*CircularProgressIndicator(
-              backgroundColor: Colors.lightBlue,
-            )*/);
-          }
-          if (snapshot.hasData) {
-            final messages = snapshot.data?.docs.reversed;
-            List<mbubble> mw = [];
-            for (var message in messages!) {
-              final mt = message.data()['text'];
-              final ms = message.data()['sender'];
-              final messageTime=message.data()['time'] as Timestamp;
-              final currentUser = loguser.email;
-
-
-
-              final messagebubbler = mbubble(
-                ms: ms,
-                mt: mt,
-                time: messageTime,
-                isMe: currentUser==ms,
-              );
-              mw.add(messagebubbler);
-            }
-
-            return Expanded(
-              child: ListView(
-                reverse: true,
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                children: mw,
-              ),
-            );
-          } else {
-            throw Exception('failed to retrieve messages');
-          }
-        });
-  }
-}
-
 class mbubble extends StatelessWidget {
-  mbubble({required this.ms, required this.mt, required this.isMe, required this.time});
+  mbubble(
+      {required this.ms,
+        required this.mt,
+        required this.isMe,
+        required this.time});
   final String? mt;
   final String? ms;
   final bool isMe;
-  final Timestamp time;
+  final Timestamp? time;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: isMe?CrossAxisAlignment.end:CrossAxisAlignment.start,
+        crossAxisAlignment:
+        isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Material(
             borderRadius: BorderRadius.circular(10),
@@ -183,11 +197,12 @@ class mbubble extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
-                crossAxisAlignment: isMe?CrossAxisAlignment.end:CrossAxisAlignment.start,
+                crossAxisAlignment:
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
                   Text(
                     '$ms',
-                    style: isMe?TextStyle(
+                    style:isMe?TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold):TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold,),
                   ),
@@ -196,9 +211,18 @@ class mbubble extends StatelessWidget {
                   ),
                   Text(
                     '$mt ',
-                    style: TextStyle(fontSize: 15,color: Colors.white),
-                  ), Text('${DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(time.seconds * 1000))}', style: TextStyle(fontSize: 10,color: Colors.white),)
-                  ,
+                    style: isMe?TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold):TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold,),
+                  ),
+                  if (time != null)
+                    Text(
+                      '${DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(time!.seconds * 1000))}',
+                      style: isMe?TextStyle(
+    color: Colors.white, fontWeight: FontWeight.bold):TextStyle(
+    color: Colors.black, fontWeight: FontWeight.bold,),
+    ),
+
                 ],
               ),
             ),

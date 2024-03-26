@@ -25,66 +25,78 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    Size scr=MediaQuery.of(context).size;
-    double scrheight=scr.height;
-    double scrwidth=scr.width;
+    Size scr = MediaQuery.of(context).size;
+    double scrheight = scr.height;
+    double scrwidth = scr.width;
     return Scaffold(
-        appBar: AppBar(backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(1),
-              child: Expanded(
-                child: Row(
-                  children: [
-                    PopupMenuButton(
-                      icon: Icon(Icons.more_vert,color: Colors.white,),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: Text('About'),
-                          value: 1,
-                          onTap: () {Navigator.pushNamed(context,About.a );
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: Text('Contact'),
-                          value: 2,
-                          onTap: () {Navigator.pushNamed(context, Contact.p);},
-                        ),
-                      ],
-                      onSelected: (value) {
-                        // do something with the selected value
-                      },
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  PopupMenuButton(
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: Colors.white,
                     ),
-                    SizedBox(
-                      width: scrwidth*0.10,
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text('About'),
+                        value: 1,
+                        onTap: () {
+                          Navigator.pushNamed(context, About.a);
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Text('Contact'),
+                        value: 2,
+                        onTap: () {
+                          Navigator.pushNamed(context, Contact.p);
+                        },
+                      ),
+                    ],
+                    onSelected: (value) {
+                      // do something with the selected value
+                    },
+                  ),
+                  /*SizedBox(
+                    width: scrwidth*0.25,
+                  ),*/
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset('images/icon.png'),
+                  ),
+                  Text('Bureau Affix',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                  /*SizedBox(
+                    width: scrwidth*0.0,
+                  ),*/
+                  PopupMenuButton(
+                    icon: Icon(
+                      Icons.logout,
+                      color: Colors.white,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset('images/icon.png'),
-                    ),
-                    Text('Bureau Affix',
-                        style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white)),
-                    SizedBox(
-                      width: scrwidth*0.0,
-                    ),
-                    PopupMenuButton(
-                      icon: Icon(Icons.logout,color: Colors.white,),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: Text(' Sign out'),
-                          value: 1,
-                          onTap: () {Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                      onSelected: (value) {
-                        // do something with the selected value
-                      },
-                    ),
-                  ],
-                ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text(' Sign out'),
+                        value: 1,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                    onSelected: (value) {
+                      // do something with the selected value
+                    },
+                  ),
+                ],
               ),
             ),
           ],
@@ -108,8 +120,11 @@ class _HomeState extends State<Home> {
                     items: imgList
                         .map((item) => Container(
                               child: Center(
-                                  child: Image.asset(item,
-                                      fit: BoxFit.cover, width: scrwidth*1.0,)),
+                                  child: Image.asset(
+                                item,
+                                fit: BoxFit.cover,
+                                width: scrwidth * 1.0,
+                              )),
                             ))
                         .toList(),
                   ),
@@ -121,7 +136,9 @@ class _HomeState extends State<Home> {
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStatePropertyAll(Size(150, 150))),
-                        onPressed: () {Navigator.pushNamed(context, Member.m);},
+                        onPressed: () {
+                          Navigator.pushNamed(context, Member.m);
+                        },
                         child: Image(
                           image: AssetImage('images/a.png'),
                         )),
@@ -129,7 +146,9 @@ class _HomeState extends State<Home> {
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStatePropertyAll(Size(150, 150))),
-                        onPressed: () {Navigator.pushNamed(context, Research.re);},
+                        onPressed: () {
+                          Navigator.pushNamed(context, Research.re);
+                        },
                         child: Image(
                           image: AssetImage('images/b.png'),
                         ))
@@ -138,22 +157,26 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextButton(style: ButtonStyle(
-                        fixedSize:
-                        MaterialStatePropertyAll(Size(150, 150))),
-                      onPressed: () {Navigator.pushNamed(context, Blog.b);},
-                      child:Image(
-                        image: AssetImage('images/c.png'),
-                      )
-                    ),
-                    TextButton(style: ButtonStyle(
-                        fixedSize:
-                        MaterialStatePropertyAll(Size(150, 150))),
-                      onPressed: () {Navigator.pushNamed(context, chat.c);},
-                      child: Image(
-                        image: AssetImage('images/d.png'),
-                      )
-                    ),
+                    TextButton(
+                        style: ButtonStyle(
+                            fixedSize:
+                                MaterialStatePropertyAll(Size(150, 150))),
+                        onPressed: () {
+                          Navigator.pushNamed(context, Blog.b);
+                        },
+                        child: Image(
+                          image: AssetImage('images/c.png'),
+                        )),
+                    TextButton(
+                        style: ButtonStyle(
+                            fixedSize:
+                                MaterialStatePropertyAll(Size(150, 150))),
+                        onPressed: () {
+                          Navigator.pushNamed(context, chat.c);
+                        },
+                        child: Image(
+                          image: AssetImage('images/d.png'),
+                        )),
                   ],
                 )
               ],
