@@ -31,7 +31,7 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Text(
           'Contact Us',

@@ -14,7 +14,7 @@ class _MemberState extends State<Member> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Text(
           'Member',

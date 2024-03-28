@@ -21,7 +21,7 @@ class _BlogState extends State<Blog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black,
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.white),backgroundColor: Colors.black,
         title: Text('Blog',style: TextStyle(color: Colors.white),),
       ),
       body: Center(

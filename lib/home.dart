@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
     double scrheight = scr.height;
     double scrwidth = scr.width;
     return Scaffold(
-        appBar: AppBar(
+        appBar: AppBar(iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           actions: [

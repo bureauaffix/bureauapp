@@ -54,7 +54,7 @@ class _chatState extends State<chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black,
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.white),backgroundColor: Colors.black,
         title: Text("Chat Now",style: TextStyle(color: Colors.white),),
 
         actions: [
@@ -125,18 +125,18 @@ class _chatState extends State<chat> {
                     width: 310,
                     child: TextField(
                       controller: messageTextController,
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                       onChanged: (value) {
                         mes = value;
                       },
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.black,
+                          fillColor: Colors.white,
                           disabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white //0x433600
+                              color: Colors.black //0x433600
                             ),
                             borderRadius: BorderRadius.circular(40),
                           ),
