@@ -34,100 +34,102 @@ class _RegisterationState extends State<Registeration> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: Padding(
-            // Added 'child:' here
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextField(
-                  controller: messagetextcontroler,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.name,
-                  onChanged: (value) {
-                    name = value;
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      hintText: "enter your Name"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: messagetextcontroler1,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    department = value;
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      hintText: "enter your Department"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: messagetextcontroler2,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      hintText: "enter your email"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: messagetextcontroler3,
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      hintText: "enter your password"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                FilledButton(
-                  onPressed: () async {
-                    _firestorecloud.collection('members').add({
-                      'Name':name,'Department':department,'Email':email,
-                    });
-                    try {
-                      final newuser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-                      if (newuser != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Home(),
-                            ));
+        body: SingleChildScrollView(
+          child: ModalProgressHUD(
+            inAsyncCall: showSpinner,
+            child: Padding(
+              // Added 'child:' here
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: messagetextcontroler,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.name,
+                    onChanged: (value) {
+                      name = value;
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        hintText: "enter your Name"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: messagetextcontroler1,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      department = value;
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        hintText: "enter your Department"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: messagetextcontroler2,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        hintText: "enter your email"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: messagetextcontroler3,
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        hintText: "enter your password"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  FilledButton(
+                    onPressed: () async {
+                      _firestorecloud.collection('members').add({
+                        'Name':name,'Department':department,'Email':email,
+                      });
+                      try {
+                        final newuser =
+                            await _auth.createUserWithEmailAndPassword(
+                                email: email, password: password);
+                        if (newuser != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Home(),
+                              ));
+                        }
+                      } catch (e) {
+                        print(e);
                       }
-                    } catch (e) {
-                      print(e);
-                    }
-                    messagetextcontroler.clear();
-                    messagetextcontroler1.clear();
-                    messagetextcontroler2.clear();
-                    messagetextcontroler3.clear();
-                  },
-                  child: const Text('Register'),
-                ),
-              ],
+                      messagetextcontroler.clear();
+                      messagetextcontroler1.clear();
+                      messagetextcontroler2.clear();
+                      messagetextcontroler3.clear();
+                    },
+                    child: const Text('Register'),
+                  ),
+                ],
+              ),
             ),
           ),
         ));
